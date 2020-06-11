@@ -14,4 +14,4 @@ class API {
   }
 }
 
-/* (`https://services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/Gasolinerasv2/FeatureServer/0/query?where=Municipio=${input.value}&outFields=*&outSR=4326&f=json`); */
+/* (`https://services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/Gasolinerasv2/FeatureServer/0/query?where=Municipio='${input.value}'&outFields=*&outSR=4326&f=json`); */

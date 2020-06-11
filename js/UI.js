@@ -39,13 +39,21 @@ class UI {
     //browse the stations
     dataPin.forEach((data) => {
       //destructuring
-      const { Longitud, Latitud, Municipio, Dirección, Horario } = data.attributes;
-
+      const {
+        Longitud,
+        Latitud,
+        Municipio,
+        Dirección,
+        Horario,
+      } = data.attributes;
 
       //create popup
       const optionsPopUp = L.popup().setContent(`
         <p>
         Calle: ${Dirección}
+        </p>
+        <p>
+        Municipio: ${Municipio}
         </p>
         <p>
         Horario: ${Horario}
@@ -61,5 +69,24 @@ class UI {
     });
     //add layer with pins in the map
     this.markers.addTo(this.mapa);
+  }
+
+  getSuggestions(search) {
+    this.api.getData().then((data) => {
+      const results = data.responseJSON.features;
+
+      this.filterSuggestions(results, search);
+    });
+  }
+
+  filterSuggestions(results, search) {
+    //filter
+    const filterResult = results.filter(
+      (filterEl) => filterEl.attributes.Provincia.indexOf(search) !== -1
+    );
+
+
+    //show pin
+    this.showPin(filterResult);
   }
 }
