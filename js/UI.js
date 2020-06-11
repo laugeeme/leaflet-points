@@ -33,23 +33,33 @@ class UI {
   }
 
   showPin(dataPin) {
-
-
-
     //clear markers before call it
     this.markers.clearLayers();
 
     //browse the stations
     dataPin.forEach((data) => {
       //destructuring
-      const { Longitud, Latitud, Municipio } = data.attributes;
+      const { Longitud, Latitud, Municipio, Dirección, Horario } = data.attributes;
 
+
+      //create popup
+      const optionsPopUp = L.popup().setContent(`
+        <p>
+        Calle: ${Dirección}
+        </p>
+        <p>
+        Horario: ${Horario}
+        </p>
+        
+        `);
 
       //add the pin
-      const marker = new L.marker([Latitud, Longitud]);
-    
+      const marker = new L.marker([Latitud, Longitud]).bindPopup(optionsPopUp);
+
+      //add every pin in the layer
       this.markers.addLayer(marker);
     });
+    //add layer with pins in the map
     this.markers.addTo(this.mapa);
   }
 }
