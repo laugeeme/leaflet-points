@@ -2,13 +2,10 @@
 
 class UI {
   constructor() {
-
     this.api = new API();
-
 
     //Create markers
     this.markers = new L.LayerGroup();
-
 
     //Start map
     this.mapa = this.inicializarMapa();
@@ -27,17 +24,32 @@ class UI {
     return map;
   }
 
-  showStations(){
-      this.api.getData()
-        .then(data => {
-             const result = data.responseJSON.features;
-            
-             this.showPin(result);
-        });
+  showStations() {
+    this.api.getData().then((data) => {
+      const result = data.responseJSON.features;
 
+      this.showPin(result);
+    });
   }
 
-  showPin(data){
-      console.log(data);
+  showPin(dataPin) {
+
+
+
+    //clear markers before call it
+    this.markers.clearLayers();
+
+    //browse the stations
+    dataPin.forEach((data) => {
+      //destructuring
+      const { Longitud, Latitud, Municipio } = data.attributes;
+
+
+      //add the pin
+      const marker = new L.marker([Latitud, Longitud]);
+    
+      this.markers.addLayer(marker);
+    });
+    this.markers.addTo(this.mapa);
   }
 }
