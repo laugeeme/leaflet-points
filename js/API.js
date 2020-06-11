@@ -1,21 +1,11 @@
-class UI {
-    constructor() {
+class API {
+    async getData(){
+        const data = await fetch('https://services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/Gasolinerasv2/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json');
 
-         // Iniciar el mapa
-         this.mapa = this.inicializarMapa();
+        const responseJSON = await data.json();
 
-    }
-
-    inicializarMapa() {
-         // Inicializar y obtener la propiedad del mapa
-         const map = L.map('mapa').setView([19.390519, -99.3739778], 6);
-         const enlaceMapa = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-         L.tileLayer(
-             'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-             attribution: '&copy; ' + enlaceMapa + ' Contributors',
-             maxZoom: 18,
-             }).addTo(map);
-         return map;
-
+        return {
+            responseJSON
+        }
     }
 }
