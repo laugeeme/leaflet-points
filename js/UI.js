@@ -5,7 +5,12 @@ class UI {
 
     this.api = new API();
 
-    // Iniciar el mapa
+
+    //Create markers
+    this.markers = new L.LayerGroup();
+
+
+    //Start map
     this.mapa = this.inicializarMapa();
   }
 
@@ -25,8 +30,14 @@ class UI {
   showStations(){
       this.api.getData()
         .then(data => {
-            console.log(data);
-        })
+             const result = data.responseJSON.features;
+            
+             this.showPin(result);
+        });
 
+  }
+
+  showPin(data){
+      console.log(data);
   }
 }
